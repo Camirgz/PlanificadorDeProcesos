@@ -22,6 +22,8 @@ void Controlador :: procesarConsulta(){
     lista.ejecutarPorPrioridad();
   } else if (entrada == "2") {
     cout << "Opción 2: Round Robin";
+    int quantum = 5;
+    lista.ejecutarRoundRobin(quantum);
   } else if (entrada == "3") {
     cout << "Opción 3: Salir del programa";
     cout << "\n ===Gracias===" << endl;

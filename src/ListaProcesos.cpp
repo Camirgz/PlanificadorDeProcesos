@@ -128,6 +128,76 @@ void ListaProcesos::ejecutarPorPrioridad() {
     cout << "Todos los procesos han sido ejecutados.\n";
 }
 
+void ListaProcesos::ejecutarRoundRobin(int quantum) {
+    if (!cabeza) {
+        cout << "No hay procesos cargados.\n";
+        return;
+    }
+
+    // Crear una cola circular simple con los procesos
+    Proceso* actual = cabeza;
+
+    while (true) {
+        bool procesosPendientes = false;
+
+        // Recorrer los procesos y asignar tiempo de CPU
+        while (actual) {
+            if (!actual->instrucciones.empty()) {
+                procesosPendientes = true;
+
+                cout << "Ejecutando proceso: " << actual->nombre << " (Quantum: " << quantum << " segundos)\n";
+                string instruccion;
+                int tiempoConsumido = 0;
+
+                // Ejecutar instrucciones dentro del quantum asignado
+                for (size_t i = 0; i < actual->instrucciones.size(); i++) {
+                    if (actual->instrucciones[i] == '\n' || i == actual->instrucciones.size() - 1) {
+                        if (i == actual->instrucciones.size() - 1 && actual->instrucciones[i] != '\n') {
+                            instruccion += actual->instrucciones[i];
+                        }
+
+                        cout << "Ejecutando: " << instruccion << "\n";
+
+                        // Simular tiempo de ejecución
+                        if (instruccion == "e/s") {
+                            cout << "Simulando operación de entrada/salida (3 ciclos)...\n";
+                            sleep(3); // 3 segundos para pares de entrada/salida
+                            tiempoConsumido += 3;
+                        } else {
+                            cout << "Simulando instrucción normal (1 ciclo)...\n";
+                            sleep(1); // 1 segundo para instrucciones normales
+                            tiempoConsumido++;
+                        }
+
+                        // Detener si se excede el quantum
+                        if (tiempoConsumido >= quantum) {
+                            cout << "Quantum finalizado. Proceso pausado: " << actual->nombre << "\n";
+                            break;
+                        }
+
+                        instruccion.clear();
+                    } else {
+                        instruccion += actual->instrucciones[i];
+                    }
+                }
+
+                // Eliminar las instrucciones ejecutadas del proceso
+                actual->instrucciones = actual->instrucciones.substr(tiempoConsumido * 2); // Remueve instrucciones ejecutadas
+            }
+
+            // Avanzar al siguiente proceso
+            actual = actual->siguiente;
+            if (!actual) actual = cabeza; // Volver al inicio si llegamos al final
+        }
+
+        // Detener el ciclo si todos los procesos han terminado
+        if (!procesosPendientes) break;
+    }
+
+    cout << "Todos los procesos han sido ejecutados con Round Robin.\n";
+}
+
+
 
 ListaProcesos::~ListaProcesos() {
     while (cabeza) {

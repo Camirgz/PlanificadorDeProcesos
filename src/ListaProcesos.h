@@ -15,6 +15,7 @@ public:
     void mostrarProcesos() const;
     void leerArchivo(const std::string& nombreArchivo);
     void ejecutarPorPrioridad();
+    void ejecutarRoundRobin(int quantum);
     ~ListaProcesos();
 };
 
