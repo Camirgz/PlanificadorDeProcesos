@@ -10,7 +10,7 @@ private:
 
 public:
     ListaProcesos();
-    void agregarProceso(const std::string& nombre, int tiempoInicio, const std::string& instrucciones);
+    void agregarProceso(const std::string& nombre, int prioridad, const std::string& instrucciones);
     void mostrarProcesos() const;
     void leerArchivo(const std::string& nombreArchivo);
     ~ListaProcesos();

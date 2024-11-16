@@ -1,18 +1,8 @@
-#include "ListaProcesos.h"
+#include "Controlador.cpp"
 #include <iostream>
 using namespace std;
 
 int main() {
-    ListaProcesos lista;
-
-    
-    // Cambia esto por la ruta al archivo proporcionado.
-    string nombreArchivo = "files/PruebaEnunciado.txt";
-
-    lista.leerArchivo(nombreArchivo);
-
-    cout << "Procesos cargados desde el archivo:\n";
-    lista.mostrarProcesos();
-
+    procesarConsulta();
     return 0;
 }

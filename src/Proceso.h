@@ -7,11 +7,11 @@ using namespace std;
 // Estructura Proceso
 struct Proceso {
     string nombre;
-    int tiempoInicio;
+    int prioridad;
     string instrucciones;
     Proceso* siguiente;
 
-    Proceso(const string& nombre_, int tiempoInicio_);
+    Proceso(const string& nombre_, int prioridad_);
 };
 
 #endif // PROCESO_H
