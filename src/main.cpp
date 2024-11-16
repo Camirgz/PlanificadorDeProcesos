@@ -1,8 +1,9 @@
-#include "Controlador.cpp"
+#include "Controlador.h"
 #include <iostream>
 using namespace std;
 
 int main() {
-    procesarConsulta();
+    Controlador controlador;
+    controlador.procesarConsulta();
     return 0;
 }

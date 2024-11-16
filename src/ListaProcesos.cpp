@@ -66,6 +66,69 @@ void ListaProcesos::leerArchivo(const string& nombreArchivo) {
     archivo.close();
 }
 
+void ListaProcesos::ejecutarPorPrioridad() {
+    if (!cabeza) {
+        cout << "No hay procesos cargados.\n";
+        return;
+    }
+
+    // Ordenar los procesos por prioridad (sin usar estructuras auxiliares)
+    Proceso* actual = nullptr;
+    Proceso* siguiente = nullptr;
+    for (actual = cabeza; actual != nullptr; actual = actual->siguiente) {
+        for (siguiente = actual->siguiente; siguiente != nullptr; siguiente = siguiente->siguiente) {
+            if (actual->prioridad > siguiente->prioridad) {
+                // Intercambiar los datos de los procesos
+                string tempNombre = actual->nombre;
+                int tempPrioridad = actual->prioridad;
+                string tempInstrucciones = actual->instrucciones;
+
+                actual->nombre = siguiente->nombre;
+                actual->prioridad = siguiente->prioridad;
+                actual->instrucciones = siguiente->instrucciones;
+
+                siguiente->nombre = tempNombre;
+                siguiente->prioridad = tempPrioridad;
+                siguiente->instrucciones = tempInstrucciones;
+            }
+        }
+    }
+
+    // Ejecutar los procesos en orden
+    actual = cabeza;
+    while (actual) {
+        cout << "Ejecutando proceso: " << actual->nombre << " (Prioridad: " << actual->prioridad << ")\n";
+        string instruccion;
+        for (size_t i = 0; i < actual->instrucciones.size(); i++) {
+            if (actual->instrucciones[i] == '\n' || i == actual->instrucciones.size() - 1) {
+                if (i == actual->instrucciones.size() - 1 && actual->instrucciones[i] != '\n') {
+                    instruccion += actual->instrucciones[i];
+                }
+
+                cout << "Ejecutando: " << instruccion << "\n";
+                
+                // Simular ejecución con sleep
+                if (instruccion == "e/s") {
+                    cout << "Simulando operación de entrada/salida (3 ciclos)...\n";
+                    sleep(3); // 3 segundos para pares de entrada/salida
+                } else {
+                    cout << "Simulando instrucción normal (1 ciclo)...\n";
+                    sleep(1); // 1 segundo para instrucciones normales
+                }
+
+                instruccion.clear();
+            } else {
+                instruccion += actual->instrucciones[i];
+            }
+        }
+        cout << "Proceso finalizado: " << actual->nombre << "\n\n";
+        actual = actual->siguiente;
+    }
+
+    cout << "Todos los procesos han sido ejecutados.\n";
+}
+
+
 ListaProcesos::~ListaProcesos() {
     while (cabeza) {
         Proceso* temp = cabeza;
