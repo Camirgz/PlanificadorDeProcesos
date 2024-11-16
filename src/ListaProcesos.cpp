@@ -24,7 +24,7 @@ void ListaProcesos::mostrarProcesos() const {
     Proceso* actual = cabeza;
     while (actual) {
         cout << "Nombre del Proceso: " << actual->nombre << "\n";
-        cout << "Tiempo de Inicio: " << actual->prioridad << "\n";
+        cout << "Prioridad: " << actual->prioridad << "\n";
         cout << "Instrucciones:\n" << actual->instrucciones << "\n\n";
         actual = actual->siguiente;
     }
