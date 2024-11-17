@@ -8,6 +8,7 @@
 class ListaProcesos {
 private:
     Proceso* cabeza;
+   
 
 public:
     ListaProcesos();
@@ -16,6 +17,7 @@ public:
     void leerArchivo(const std::string& nombreArchivo);
     void ejecutarPorPrioridad();
     void ejecutarRoundRobin(int quantum);
+    void eliminarLista();
     ~ListaProcesos();
 };
 

@@ -7,6 +7,7 @@ using namespace std;
 // Estructura Proceso
 class Controlador {
 public:
+
     void procesarConsulta();
 };
 
