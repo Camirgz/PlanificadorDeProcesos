@@ -19,6 +19,7 @@ public:
     void ejecutarRoundRobin(int quantum);
     void eliminarLista();
     ~ListaProcesos();
+    Proceso* obtenerCabeza() const;
 };
 
 #endif // LISTA_PROCESOS_H

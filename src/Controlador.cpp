@@ -1,44 +1,42 @@
 #include <iostream>
 #include "ListaProcesos.h"
 #include "Controlador.h"
+#include "RoundRobin.h"
+#include "Prioridades.h"
 
 using namespace std;
 
-void Controlador :: procesarConsulta(){
+void Controlador::procesarConsulta() {
+    ListaProcesos lista;
+    string entrada;
 
-  // Crear lista de procesos
-  ListaProcesos lista;
-  string entrada;
+    cout << "=== Bienvenido al Planificador de Procesos ===\n";
+    cout << "Ingrese el nombre de su archivo guardado en Files: ";
+    getline(cin, entrada);
+    string nombreArchivo = "files/" + entrada + ".txt";
+    lista.leerArchivo(nombreArchivo);
 
-  // Leer archivo de procesos
-  cout << "===Bienvenido al Planificador de Procesos ===" << endl;
-  cout << "Ingrese el nombre de su archivo guardado en Files: ";
-  getline(cin, entrada);
-  string nombreArchivo = "files/" + entrada+".txt"; 
-  lista.leerArchivo(nombreArchivo);
+    lista.mostrarProcesos();
 
-  // ver qué procesos se ejecutarán
-  lista.mostrarProcesos();
+    cout << "¿Cuál método quiere usar?\n1) Prioridad\n2) Round Robin\n3) Salir del programa\n";
+    getline(cin, entrada);
 
-  // Preguntar al usuario qué método de planificación desea usar
-  cout << "Cuál método quiere usar? \n1) Prioridad \n2) Round Robin \n3) Salir del programa \n";
-  getline(cin, entrada);
-  if (entrada == "1") {
-    cout << "Opción 1: Prioridad";
-    lista.ejecutarPorPrioridad();
-  } else if (entrada == "2") {
-    cout << "Opción 2: Round Robin";
-    int quantum = 5;
-    lista.ejecutarRoundRobin(quantum);
-  } else if (entrada == "3") {
-    cout << "Opción 3: Salir del programa";
-    cout << "\n ===Gracias===" << endl;
-  } else {
-    cout << "Opción no válida";
+    Algoritmo* algoritmo = nullptr;
+    if (entrada == "1") {
+        algoritmo = new Prioridades();
+    } else if (entrada == "2") {
+        int quantum = 5; // Quantum predeterminado
+        algoritmo = new RoundRobin(quantum);
+    } else if (entrada == "3") {
+        cout << "=== Gracias ===\n";
+        return;
+    } else {
+        cout << "Opción no válida.\n";
+        return;
     }
 
-  cout << "Procesos cargados desde el archivo:\n" << nombreArchivo << endl;
-  
+    algoritmo->ejecutar(lista.obtenerCabeza());
+    delete algoritmo;
 
-  cout << "\n ===Gracias===" << endl;
-};
+    cout << "=== Gracias ===\n";
+}
