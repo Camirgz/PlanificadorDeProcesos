@@ -1,7 +1,8 @@
 #include "Prioridades.h"
 
-
 void Prioridades::ejecutar(Proceso* cabeza) {
+
+    // Verificar si hay procesos cargados
     if (!cabeza) {
         std::cout << "No hay procesos cargados.\n";
         return;
@@ -25,6 +26,8 @@ void Prioridades::ejecutar(Proceso* cabeza) {
         std::cout << "Ejecutando proceso: " << actual->nombre << " (Prioridad: " << actual->prioridad << ")\n";
 
         std::string instruccion;
+
+        // Ejecutar las instrucciones del proceso
         for (size_t i = 0; i < actual->instrucciones.size(); i++) {
             if (actual->instrucciones[i] == '\n' || i == actual->instrucciones.size() - 1) {
                 if (i == actual->instrucciones.size() - 1 && actual->instrucciones[i] != '\n') {

@@ -3,12 +3,17 @@
 #include <fstream>
 using namespace std;
 
+// Constructor
 ListaProcesos::ListaProcesos() : cabeza(nullptr) {}
 
+// Agregar un proceso a la lista
 void ListaProcesos::agregarProceso(const string& nombre, int prioridad, const string& instrucciones) {
+
+    // Crear un nuevo proceso
     Proceso* nuevo = new Proceso(nombre, prioridad);
     nuevo->instrucciones = instrucciones;
 
+    // Agregar el proceso a la lista
     if (!cabeza) {
         cabeza = nuevo;
     } else {
@@ -20,6 +25,7 @@ void ListaProcesos::agregarProceso(const string& nombre, int prioridad, const st
     }
 }
 
+// Mostrar los procesos de la lista (imprimir)
 void ListaProcesos::mostrarProcesos() const {
     Proceso* actual = cabeza;
     while (actual) {
@@ -30,19 +36,24 @@ void ListaProcesos::mostrarProcesos() const {
     }
 }
 
+// Leer un archivo de texto con los procesos
 void ListaProcesos::leerArchivo(const string& nombreArchivo) {
+
+    // Abrir el archivo
     ifstream archivo(nombreArchivo);
     if (!archivo.is_open()) {
         cerr << "Error al abrir el archivo.\n";
         return;
     }
 
+    // Leer el archivo línea por línea
     string linea;
     string nombreProceso;
     int prioridad = 0;
     string instrucciones = "";
     bool leyendoProceso = false;
 
+    // Leer el archivo línea por línea
     while (getline(archivo, linea)) {
         if (linea.find("proceso") == 0) {
             if (leyendoProceso) {
@@ -66,6 +77,7 @@ void ListaProcesos::leerArchivo(const string& nombreArchivo) {
     archivo.close();
 }
 
+// Ejecutar los procesos por prioridad
 void ListaProcesos::eliminarLista() {
     while (cabeza) {
         Proceso* temp = cabeza;
@@ -74,10 +86,12 @@ void ListaProcesos::eliminarLista() {
     }
 }
 
+// Ejecutar los procesos por prioridad
 Proceso* ListaProcesos::obtenerCabeza() const {
     return cabeza;
 }
 
+// Destructor
 ListaProcesos::~ListaProcesos() {
     while (cabeza) {
         Proceso* temp = cabeza;

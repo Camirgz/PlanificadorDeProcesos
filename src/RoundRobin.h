@@ -4,13 +4,18 @@
 #include "Algoritmo.h"
 #include <iostream>
 
-class RoundRobin : public Algoritmo {
+class RoundRobin : public Algoritmo { // Clase Algoritmo hereda a RoundRobin
+
+// Atributos
 private:
     int quantum;
 
 public:
+    // Constructor
     RoundRobin(int quantum_) : quantum(quantum_) {}
+
+    // Método polimórfico
     void ejecutar(Proceso* cabeza) override;
 };
 
-#endif // ROUND_ROBIN_H
+#endif 

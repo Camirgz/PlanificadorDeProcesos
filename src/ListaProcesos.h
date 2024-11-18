@@ -1,15 +1,21 @@
 #ifndef LISTA_PROCESOS_H
 #define LISTA_PROCESOS_H
 
+// Includes
 #include "Proceso.h"
 #include <unistd.h> // Para sleep() en sistemas UNIX/Linux
 #include <string>
 
+// Clase ListaProcesos
 class ListaProcesos {
+
+// Atributos
 private:
+
+    // Puntero a la cabeza de la lista
     Proceso* cabeza;
    
-
+// Métodos
 public:
     ListaProcesos();
     void agregarProceso(const std::string& nombre, int prioridad, const std::string& instrucciones);

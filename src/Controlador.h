@@ -8,6 +8,7 @@ using namespace std;
 class Controlador {
 public:
 
+    // Método para procesar la consulta del usuario
     void procesarConsulta();
 };
 

@@ -5,9 +5,12 @@
 #include <iostream>
 #include <unistd.h>
 
-class Prioridades : public Algoritmo {
+class Prioridades : public Algoritmo { // Clase Algoritmo hereda a Prioridades
+
 public:
+
+    // Método polimórfico
     void ejecutar(Proceso* cabeza) override;
 };
 
-#endif // PRIORIDADES_H
+#endif 
