@@ -1,4 +1,5 @@
 #include "ListaProcesos.h"
+#include "Algoritmo.h" //Colores
 #include <iostream>
 #include <fstream>
 using namespace std;
@@ -29,9 +30,9 @@ void ListaProcesos::agregarProceso(const string& nombre, int prioridad, const st
 void ListaProcesos::mostrarProcesos() const {
     Proceso* actual = cabeza;
     while (actual) {
-        cout << "\nNombre del Proceso: " << actual->nombre << "\n";
-        cout << "Prioridad: " << actual->prioridad << "\n";
-        cout << "Instrucciones:\n" << actual->instrucciones << "\n\n";
+        cout << AZUL << "\nNombre del Proceso: " << RESET << actual->nombre << "\n";
+        cout << CYAN << "Prioridad: " << RESET << actual->prioridad << "\n";
+        cout << VERDE << "Instrucciones:\n" << RESET << actual->instrucciones << "\n\n";
         actual = actual->siguiente;
     }
 }
@@ -42,7 +43,8 @@ void ListaProcesos::leerArchivo(const string& nombreArchivo) {
     // Abrir el archivo
     ifstream archivo(nombreArchivo);
     if (!archivo.is_open()) {
-        cerr << "Error al abrir el archivo.\n";
+        cout << "Error al abrir el archivo.\n";
+        abrirArchivo = false;
         return;
     }
 
@@ -73,7 +75,7 @@ void ListaProcesos::leerArchivo(const string& nombreArchivo) {
             instrucciones += linea + "\n";
         }
     }
-
+    abrirArchivo = true;
     archivo.close();
 }
 
@@ -98,4 +100,8 @@ ListaProcesos::~ListaProcesos() {
         cabeza = cabeza->siguiente;
         delete temp;
     }
+}
+
+bool ListaProcesos::obtenerAbrirArchivo() const {
+    return abrirArchivo;
 }

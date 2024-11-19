@@ -12,7 +12,7 @@ void Prioridades::ejecutar(Proceso* cabeza) {
     for (Proceso* actual = cabeza; actual != nullptr; actual = actual->siguiente) {
         for (Proceso* siguiente = actual->siguiente; siguiente != nullptr; siguiente = siguiente->siguiente) {
             if (actual->prioridad > siguiente->prioridad) {
-                std::swap(actual->nombre, siguiente->nombre);
+                std::swap(actual->nombre, siguiente->nombre); // Swap : intercambia los valores de dos variables
                 std::swap(actual->prioridad, siguiente->prioridad);
                 std::swap(actual->instrucciones, siguiente->instrucciones);
             }
@@ -21,9 +21,9 @@ void Prioridades::ejecutar(Proceso* cabeza) {
 
     // Ejecutar los procesos en orden
     Proceso* actual = cabeza;
-    std::cout << "Ejecutando procesos en orden de prioridad...\n";
+    std::cout << "Ejecutando procesos en orden de prioridad...\n"<< endl;
     while (actual) {
-        std::cout << "Ejecutando proceso: " << actual->nombre << " (Prioridad: " << actual->prioridad << ")\n";
+        std::cout << MAGENTA << "Ejecutando proceso: " << actual->nombre << RESET << " (Prioridad: " << actual->prioridad << ")\n";
 
         std::string instruccion;
 
@@ -36,10 +36,10 @@ void Prioridades::ejecutar(Proceso* cabeza) {
                 std::cout << "Ejecutando: " << instruccion << "\n";
 
                 if (instruccion == "e/s") {
-                    std::cout << "Simulando operación de entrada/salida (3 ciclos)...\n";
+                    std::cout << AZUL << "Simulando operación de entrada/salida (3 ciclos)...\n" << RESET;
                     sleep(3);
                 } else {
-                    std::cout << "Simulando instrucción normal (1 ciclo)...\n";
+                    std::cout << CYAN <<"Simulando instrucción normal (1 ciclo)...\n" << RESET;
                     sleep(1);
                 }
                 instruccion.clear();
@@ -50,5 +50,5 @@ void Prioridades::ejecutar(Proceso* cabeza) {
         actual = actual->siguiente;
     }
 
-    std::cout << "Todos los procesos han sido ejecutados en orden de prioridad.\n";
+    std::cout << VERDE <<"\nTodos los procesos han sido ejecutados en orden de prioridad." << RESET;
 }

@@ -14,10 +14,11 @@ private:
 
     // Puntero a la cabeza de la lista
     Proceso* cabeza;
-   
+    bool abrirArchivo;
 // Métodos
 public:
     ListaProcesos();
+    bool obtenerAbrirArchivo() const;
     void agregarProceso(const std::string& nombre, int prioridad, const std::string& instrucciones);
     void mostrarProcesos() const;
     void leerArchivo(const std::string& nombreArchivo);
