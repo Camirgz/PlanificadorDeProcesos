@@ -79,7 +79,7 @@ make clean ; make ; make run
 
 ## Notas Importantes
 - **Restricciones**: No se utilizaron `list`, `vector`, `map` ni bibliotecas adicionales como `<thread>` o `<chrono>`. El manejo de datos se realiza exclusivamente con listas enlazadas personalizadas.
-- El programa fue desarrollado con un enfoque en programación orientada a objetos.
+- El programa fue desarrollado con un enfoque en programación orientada a objetos, con herencia, polimorfismo y temas tratados en el curso.
 
 ## Autores
 - Camila Rodríguez Águila
