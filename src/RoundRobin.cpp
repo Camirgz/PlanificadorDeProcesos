@@ -1,8 +1,6 @@
 #include "RoundRobin.h"
 #include <unistd.h> // Para sleep()
 
-// Método polimórfico
-
 void RoundRobin::ejecutar(Proceso* cabeza) {
     // Verificar si hay procesos cargados
     if (!cabeza) {
@@ -10,58 +8,58 @@ void RoundRobin::ejecutar(Proceso* cabeza) {
         return;
     }
 
-    bool procesosPendientes;
+    bool procesosPendientes; // Indica si quedan procesos sin completar
 
     do {
         procesosPendientes = false; // Reiniciar el estado de procesos pendientes
-        Proceso* actual = cabeza;
+        Proceso* actual = cabeza; // Iterar desde el primer proceso
 
         while (actual) {
             if (!actual->instrucciones.empty()) {
                 procesosPendientes = true; // Hay procesos pendientes
-                std::cout << "Ejecutando proceso: " << actual->nombre << " (Quantum: " << quantum << " segundos)\n";
-                
+                std::cout << MAGENTA << "\nEjecutando proceso: " << actual->nombre << " (Quantum: " << quantum << " segundos)\n" << RESET;
+
                 std::string instruccion;
-                int tiempoConsumido = 0;
+                int tiempoConsumido = 0; // Control del tiempo consumido en el quantum
 
                 // Procesar las instrucciones
                 while (tiempoConsumido < quantum && !actual->instrucciones.empty()) {
-                    // Obtener la siguiente instrucción
+                    // Extraer la siguiente instrucción
                     size_t pos = actual->instrucciones.find('\n');
                     if (pos == std::string::npos) {
                         instruccion = actual->instrucciones; // Última instrucción
-                        actual->instrucciones.clear(); // Limpiar instrucciones
+                        actual->instrucciones.clear();      // Limpiar instrucciones
                     } else {
                         instruccion = actual->instrucciones.substr(0, pos);
-                        actual->instrucciones = actual->instrucciones.substr(pos + 1); // Actualizar a las instrucciones restantes
+                        actual->instrucciones = actual->instrucciones.substr(pos + 1); // Actualizar el resto
                     }
 
-                    std::cout << "Ejecutando: " << instruccion << "\n";
-
-                    // Simular ejecución de la instrucción
-                    if (instruccion == "e/s") {
-                        std::cout << "Simulando operación de entrada/salida (3 ciclos)...\n";
-                        sleep(3);
+                    // Simular la ejecución de la instrucción
+                    if (instruccion.find("e/s") != std::string::npos) {
+                        std::cout << AMARILLO << "Proceso " << actual->nombre << " bloqueado por E/S.\n" << RESET;
+                        std::cout << "Ejecutando: " << instruccion << "\n";
+                        sleep(3); // Simular E/S (3 ciclos)
                         tiempoConsumido += 3;
+                        break; // Finaliza el quantum por bloqueo
                     } else {
-                        std::cout << "Simulando instrucción normal (1 ciclo)...\n";
+                        std::cout << "Ejecutando: " << instruccion << "\n";
+                        std::cout << CYAN << "Simulando instrucción normal (1 ciclo)...\n" << RESET;
                         sleep(1);
                         tiempoConsumido++;
                     }
                 }
 
-                // Si todas las instrucciones han sido ejecutadas, se dejará vacío
+                // Evaluar el estado tras consumir el quantum
                 if (actual->instrucciones.empty()) {
-                    std::cout << "Proceso " << actual->nombre << " completado.\n";
+                    std::cout << VERDE << "\nProceso " << actual->nombre << " finalizado.\n" << RESET;
+                } else if (tiempoConsumido >= quantum) {
+                    std::cout << ROJO<< "Quantum agotado. Proceso " << actual->nombre << " cortado y regresado a la cola.\n" << RESET;
                 }
             }
-            actual = actual->siguiente;
+            actual = actual->siguiente; // Pasar al siguiente proceso
         }
 
-        // Llamar al método para eliminar procesos completados
-       
-        
-    } while (procesosPendientes); // El bucle continuará si hay procesos pendientes
+    } while (procesosPendientes); // Continuar mientras haya procesos pendientes
 
-    std::cout << "Todos los procesos han sido ejecutados con Round Robin.\n";
+    std::cout << "\nTodos los procesos han sido ejecutados con Round Robin.\n";
 }
