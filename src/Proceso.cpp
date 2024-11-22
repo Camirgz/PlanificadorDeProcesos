@@ -7,6 +7,7 @@ Proceso::Proceso(const string& nombre, int prioridad) {
     this->prioridad = prioridad;
     instrucciones = "";
     siguiente = nullptr;
+    estado = "Listo";
 }
     
 

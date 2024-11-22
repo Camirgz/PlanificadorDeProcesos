@@ -5,16 +5,18 @@
 using namespace std;
 
 // Estructura Proceso
-struct Proceso {
-
+class Proceso
+{
+public:
     // Atributos
     string nombre;
     int prioridad;
     string instrucciones;
-    Proceso* siguiente;
+    Proceso *siguiente;
+    string estado;
 
     // Constructor
-    Proceso(const string& nombre_, int prioridad_);
+    Proceso(const string &nombre_, int prioridad_);
 };
 
-#endif 
+#endif

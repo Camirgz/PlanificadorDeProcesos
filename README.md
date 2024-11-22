@@ -83,3 +83,4 @@ make clean ; make ; make run
 
 ## Autores
 - Camila Rodríguez Águila
+- Juan Manuel Alvarado
