@@ -21,7 +21,7 @@ public:
     virtual ~Algoritmo() = default;
     void imprimirEstados(Proceso* cabeza) {
     Proceso* actual = cabeza;
-    std::cout << "\nEstado actual de los procesos:\n";
+    std::cout << "\n=== Estado actual de los procesos: ===\n";
     while (actual) {
         std::cout << "Proceso: " << actual->nombre << " (Prioridad: " << actual->prioridad << ") (Estado: ";
         if (actual->estado == "Listo") {

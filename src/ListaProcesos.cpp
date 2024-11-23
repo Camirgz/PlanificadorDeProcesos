@@ -28,6 +28,7 @@ void ListaProcesos::agregarProceso(const string& nombre, int prioridad, const st
 
 // Mostrar los procesos de la lista (imprimir)
 void ListaProcesos::mostrarProcesos() const {
+    cout << "=== Procesos cargados ===\n";
     Proceso* actual = cabeza;
     while (actual) {
         cout << AZUL << "\nNombre del Proceso: " << RESET << actual->nombre << "\n";
