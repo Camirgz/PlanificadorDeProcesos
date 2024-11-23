@@ -11,7 +11,7 @@ public:
 
     // Método polimórfico
     void ejecutar(Proceso* cabeza) override;
-    void imprimirEstados(Proceso* cabeza);
+    
 };
 
 #endif 

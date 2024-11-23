@@ -1,28 +1,6 @@
 #include "RoundRobin.h"
 #include <unistd.h> // Para sleep()
 
-// Función auxiliar para imprimir los estados de los procesos
-void RoundRobin::imprimirEstados(Proceso* cabeza) {
-    Proceso* actual = cabeza;
-    std::cout << "\nEstado actual de los procesos:\n";
-    while (actual) {
-        std::cout << "Proceso: " << actual->nombre << " (Estado: ";
-        if (actual->estado == "Listo") {
-            std::cout << AZUL << actual->estado << RESET;
-        } else if (actual->estado == "Finalizado") {
-            std::cout << VERDE << actual->estado << RESET;
-        } else if (actual->estado == "Bloqueado por E/S") {
-            std::cout << AMARILLO << actual->estado << RESET;
-        } else if (actual->estado == "En ejecución: Activo") {
-            std::cout << MAGENTA << actual->estado << RESET;
-        } else {
-            std::cout << actual->estado; // Sin color para otros estados
-        }
-        std::cout << ")\n";
-        actual = actual->siguiente;
-    }
-}
-
 void RoundRobin::ejecutar(Proceso* cabeza) {
     if (!cabeza) {
         std::cout << "No hay procesos cargados.\n";
