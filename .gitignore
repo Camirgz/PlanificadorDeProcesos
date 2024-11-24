@@ -34,3 +34,7 @@
 # Build files
 build/
 bin/
+
+# Doxygen
+Doxyfile
+doc/

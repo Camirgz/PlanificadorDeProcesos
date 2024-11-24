@@ -17,8 +17,24 @@ class Algoritmo {
 
 public:
     // Método virtual puro
+    /**
+     * @brief metodo virtual puro que ejecuta el algoritmo
+     * 
+     * @param cabeza 
+     */
     virtual void ejecutar(Proceso* cabeza) = 0; // Método polimórfico
+
+    /**
+     * @brief Destroy the Algoritmo object
+     * 
+     */
     virtual ~Algoritmo() = default;
+
+    /**
+     * @brief metodo que imprime los estados de los procesos
+     * 
+     * @param cabeza 
+     */
     void imprimirEstados(Proceso* cabeza) {
     Proceso* actual = cabeza;
     std::cout << "\n=== Estado actual de los procesos: ===\n";
