@@ -2,31 +2,31 @@
 #define LISTA_PROCESOS_H
 
 // Includes
-#include "Proceso.h"
 #include <unistd.h> // Para sleep() en sistemas UNIX/Linux
 #include <string>
+#include "Proceso.h"
 
-// Clase ListaProcesos
+// Clase ListaProcesos - Template
+template <typename T>
 class ListaProcesos {
 
-// Atributos
+    // Atributos
 private:
-
     // Puntero a la cabeza de la lista
-    Proceso* cabeza;
+    T* cabeza;
     bool abrirArchivo;
-// Métodos
+
+    // Métodos
 public:
     ListaProcesos();
     bool obtenerAbrirArchivo() const;
-    void agregarProceso(const std::string& nombre, int prioridad, const std::string& instrucciones);
-    void mostrarProcesos() const;
+    void agregarElemento(const std::string& nombre, int prioridad, const std::string& instrucciones);
+    void mostrarElementos() const;
+    void mostrarProcesos() const; // Cambiado de mostrarElementos a mostrarProcesos
     void leerArchivo(const std::string& nombreArchivo);
-    void ejecutarPorPrioridad();
-    void ejecutarRoundRobin(int quantum);
     void eliminarLista();
     ~ListaProcesos();
-    Proceso* obtenerCabeza() const;
+    T* obtenerCabeza() const;
 };
 
 #endif // LISTA_PROCESOS_H

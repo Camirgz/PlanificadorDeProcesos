@@ -1,18 +1,19 @@
 #include <iostream>
+#include <string>  // Agregado para usar 'std::string'
 #include "ListaProcesos.h"
 #include "Controlador.h"
 #include "RoundRobin.h"
 #include "Prioridades.h"
+#include "Proceso.h"
 #include "Algoritmo.h" // Colores
 
 using namespace std;
 
 void Controlador::procesarConsulta()
 {
-
     // Crear lista de procesos
-    ListaProcesos lista;
-    string entrada;
+    ListaProcesos<Proceso> lista;
+    string entrada;  // Esto ahora funciona correctamente
 
     // Leer archivo
     cout << VERDE << "\n=== Bienvenido al Planificador de Procesos ===\n"
@@ -26,7 +27,7 @@ void Controlador::procesarConsulta()
     if (lista.obtenerAbrirArchivo())
     {
         cout << "\n=== Procesos cargados ===\n";
-        cout << "¿Cuál método quiere usar?\n1) Prioridad\n2) Round Robin\n3) Salir del programa\n"<< endl;
+        cout << "¿Cuál método quiere usar?\n1) Prioridad\n2) Round Robin\n3) Salir del programa\n" << endl;
         getline(cin, entrada);
         cout << endl;
 
@@ -37,7 +38,7 @@ void Controlador::procesarConsulta()
         if (entrada == "1")
         {
             lista.mostrarProcesos();
-            algoritmo = new Prioridades(); 
+            algoritmo = new Prioridades();
         }
         else if (entrada == "2")
         {
@@ -60,15 +61,13 @@ void Controlador::procesarConsulta()
 
         // Liberar memoria
         delete algoritmo;
-
-    } 
-
+    }
     else // No se pudo abrir el archivo
     {
         cout << "No se cargaron procesos.\n";
         return;
     }
-    
+
     cout << "\n === Gracias ===" << endl;
     cout << "\n" << endl;
     return;
