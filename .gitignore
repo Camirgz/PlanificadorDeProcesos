@@ -35,6 +35,3 @@
 build/
 bin/
 
-# Doxygen
-Doxyfile
-doc/
