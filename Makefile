@@ -190,7 +190,7 @@ project: $(PROJECT)
 # Documentation
 doc: $(DOCTARG)
 cppdoc: Doxyfile $(INPUTCX)
-	doxygen -q
+	doxygen 
 
 javadoc: $(SOURCEJ) | $(DOC)/java/.
 	javadoc -quiet $(SOURCEJ) -d $(DOC)/java
