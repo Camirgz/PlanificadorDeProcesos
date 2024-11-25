@@ -3,6 +3,7 @@
 
 void Prioridades::ejecutar(Proceso *cabeza)
 {
+    // Verificar si hay procesos cargados
     if (!cabeza)
     {
         std::cout << "No hay procesos cargados.\n";
@@ -23,13 +24,16 @@ void Prioridades::ejecutar(Proceso *cabeza)
         }
     }
 
+    // Imprimir procesos ordenados
     bool procesosPendientes;
 
     do
     {
+        // Inicializar variable de control
         procesosPendientes = false;
         Proceso *actual = cabeza;
 
+        // Imprimir estados iniciales
         while (actual)
         {
             if (!actual->instrucciones.empty())
@@ -47,6 +51,7 @@ void Prioridades::ejecutar(Proceso *cabeza)
                 std::string instruccion;
                 bool bloqueadoPorES = false;
 
+                // Ejecutar instrucciones del proceso
                 while (!actual->instrucciones.empty())
                 {
                     size_t pos = actual->instrucciones.find('\n');
@@ -61,58 +66,40 @@ void Prioridades::ejecutar(Proceso *cabeza)
                         actual->instrucciones = actual->instrucciones.substr(pos + 1);
                     }
 
+                    // Verificar si la instrucción es de E/S
                     if (instruccion.find("e/s") != std::string::npos)
                     {
-                        if (bloqueadoPorES)
+                        // Verificar si el proceso está bloqueado por E/S
+                        if (!bloqueadoPorES)
                         {
-                            // Si el proceso ya estaba bloqueado, intentamos desbloquearlo verificando la siguiente instrucción
-                            size_t nextPos = actual->instrucciones.find('\n');
-                            std::string nextInstruccion = (nextPos == std::string::npos)
-                                                              ? actual->instrucciones
-                                                              : actual->instrucciones.substr(0, nextPos);
-
-                            if (nextInstruccion.find("e/s") != std::string::npos)
-                            {
-                                std::cout << VERDE << "Se encontró la siguiente operación de E/S. Proceso "
-                                          << actual->nombre << " ahora desbloqueado.\n"
-                                          << RESET;
-                                bloqueadoPorES = false; // Desbloquear
-                                actual->instrucciones = (nextPos == std::string::npos)
-                                                            ? ""
-                                                            : actual->instrucciones.substr(nextPos + 1);
-                                continue; // Avanzar a la siguiente instrucción
-                            }
-                            else
-                            {
-                                std::cout << ROJO << "No se encontró la siguiente operación de E/S. Proceso "
-                                          << actual->nombre << " se mantiene bloqueado.\n"
-                                          << RESET;
-                                break; // Salir del ciclo
-                            }
-                        }
-                        else
-                        {
-                            // Primera vez que se encuentra una operación E/S
                             actual->estado = "Bloqueado por E/S";
                             imprimirEstados(cabeza); // Imprimir estados después del cambio
 
                             std::cout << AMARILLO << "Proceso " << actual->nombre
-                                      << " bloqueado por E/S. Se encontró la primera operación de E/S.\n"
+                                      << " bloqueado por E/S. Ejecutando operación de E/S.\n"
                                       << RESET;
-                            bloqueadoPorES = true; // Bloqueo inicial
-                            sleep(3);              // Simular tiempo de espera por E/S
+                            bloqueadoPorES = true;
+                            sleep(3); // Simular tiempo de espera por E/S
+                        }
+                        else
+                        {
+                            std::cout << VERDE << "Proceso " << actual->nombre
+                                      << " desbloqueado. Continuando ejecución tras operación de E/S.\n"
+                                      << RESET;
+                            bloqueadoPorES = false; // Desbloquear
                         }
                     }
                     else
-                    {
+                    { // Instrucción normal
                         if (bloqueadoPorES)
                         {
-                            std::cout << ROJO << "No se encontró la siguiente operación de E/S. Proceso "
-                                      << actual->nombre << " se mantiene bloqueado.\n"
+                            std::cout << VERDE << "Proceso " << actual->nombre
+                                      << " desbloqueado. Continuando ejecución.\n"
                                       << RESET;
-                            break; // Salir del ciclo sin desbloquear
+                            bloqueadoPorES = false; // Desbloquear si no está en operación de E/S
                         }
 
+                        // Simular ejecución de instrucción
                         std::cout << "Ejecutando: " << instruccion << "\n";
                         std::cout << CYAN << "Simulando instrucción normal (1 ciclo)...\n"
                                   << RESET;
@@ -120,25 +107,15 @@ void Prioridades::ejecutar(Proceso *cabeza)
                     }
                 }
 
+                // Cambiar estado a "Finalizado" si no hay más instrucciones
                 if (actual->instrucciones.empty())
                 {
-                    if (bloqueadoPorES)
-                    {
-                        actual->estado = "Bloqueado por E/S";
-                        imprimirEstados(cabeza); // Imprimir estados después del cambio
+                    actual->estado = "Finalizado";
+                    imprimirEstados(cabeza); // Imprimir estados después del cambio
 
-                        std::cout << ROJO << "\nProceso " << actual->nombre
-                                  << " finalizó con una operación de E/S pendiente. Se mantiene bloqueado.\n"
-                                  << RESET;
-                    }
-                    else
-                    {
-                        actual->estado = "Finalizado";
-                        imprimirEstados(cabeza); // Imprimir estados después del cambio
-
-                        std::cout << VERDE << "\nProceso " << actual->nombre << " finalizado (Estado: "
-                                  << VERDE << actual->estado << RESET << ").\n";
-                    }
+                    std::cout << VERDE << "\nProceso " << actual->nombre << " finalizado (Estado: "
+                              << actual->estado << ").\n"
+                              << RESET;
                 }
             }
             actual = actual->siguiente;

@@ -17,6 +17,8 @@ public:
      * @brief  estado del proceso
      * 
      */
+
+    // Atributos
     string nombre;
     int prioridad;
     string instrucciones;

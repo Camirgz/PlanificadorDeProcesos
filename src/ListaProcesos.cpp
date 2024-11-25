@@ -3,11 +3,8 @@
 #include <fstream>
 using namespace std;
 
-
-
 // Es necesario instanciar las plantillas (templates) fuera de este archivo
 template class ListaProcesos<Proceso>; // Instancia de la clase para Proceso
-
 
 // Constructor
 template <typename T>

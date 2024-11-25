@@ -16,8 +16,7 @@ void Controlador::procesarConsulta()
     string entrada;  // Esto ahora funciona correctamente
 
     // Leer archivo
-    cout << VERDE << "\n=== Bienvenido al Planificador de Procesos ===\n"
-         << RESET;
+    cout << VERDE << "\n=== Bienvenido al Planificador de Procesos ===\n" << RESET;
     cout << "Ingrese el nombre de su archivo guardado en Files: ";
     getline(cin, entrada);
     string nombreArchivo = "files/" + entrada + ".txt";

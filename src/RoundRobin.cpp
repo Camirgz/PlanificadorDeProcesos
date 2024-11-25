@@ -2,6 +2,8 @@
 #include <unistd.h> // Para sleep()
 
 void RoundRobin::ejecutar(Proceso* cabeza) {
+
+    // Verificar si hay procesos cargados
     if (!cabeza) {
         std::cout << "No hay procesos cargados.\n";
         return;
@@ -10,13 +12,20 @@ void RoundRobin::ejecutar(Proceso* cabeza) {
     // Imprimir estados iniciales
     imprimirEstados(cabeza);
 
+    // Ejecutar Round Robin
     bool procesosPendientes;
 
+    // Iterar mientras haya procesos pendientes
     do {
+
+        // Inicializar variable de control
         procesosPendientes = false;
         Proceso* actual = cabeza;
 
+        // Imprimir estados iniciales
         while (actual) {
+
+            // Verificar
             if (!actual->instrucciones.empty()) {
                 procesosPendientes = true;
 
@@ -31,6 +40,7 @@ void RoundRobin::ejecutar(Proceso* cabeza) {
                 int tiempoConsumido = 0;
                 int contadorES = 0; // Contador de operaciones de E/S
 
+                // Verificar cada instrucción del proceso con el quantum
                 while (tiempoConsumido < quantum && !actual->instrucciones.empty()) {
                     size_t pos = actual->instrucciones.find('\n');
                     if (pos == std::string::npos) {
@@ -41,6 +51,7 @@ void RoundRobin::ejecutar(Proceso* cabeza) {
                         actual->instrucciones = actual->instrucciones.substr(pos + 1);
                     }
 
+                    // Verificar si la instrucción es de E/S
                     if (instruccion.find("e/s") != std::string::npos) {
                         contadorES++;
                         if (contadorES % 2 != 0) {
@@ -65,6 +76,7 @@ void RoundRobin::ejecutar(Proceso* cabeza) {
                     }
                 }
 
+                // Verificar si el proceso ha finalizado
                 if (actual->instrucciones.empty()) {
                     if (contadorES % 2 != 0) {
                         actual->estado = "Bloqueado por E/S";

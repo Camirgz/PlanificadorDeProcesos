@@ -4,6 +4,7 @@ instruccion 2
 fin proceso
 proceso tarea2 1
 e/s
+e/s
 instruccion 3
 fin proceso
 proceso tarea3 2
@@ -14,5 +15,6 @@ instruccion 4
 fin proceso
 proceso tarea4 4
 instruccion 5
+e/s
 e/s
 fin proceso
