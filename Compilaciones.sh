@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Limpiar compilaciones previas
-echo "Ejecutando: make clean"
+echo "Ejecutando: make clean para limpiar archivos"
 make clean
 
 # Compilar con múltiples núcleos
