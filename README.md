@@ -23,10 +23,19 @@ PlanificadorDeProcesos/
 │   ├── Controlador.h
 │   ├── ListaProcesos.h
 │   ├── Proceso.h
-├── build/              # Archivos compilados (objetos)
-├── bin/                # Binarios ejecutables
-├── files/              # Archivos de procesos de ejemplo
+├── build/
+│   ├── Controlador.o
+│   ├── ListaProcesos.o
+│   ├── Proceso.o
+├── bin/
+│   ├── PlanificadorDeProcesos
+├── files/
+│   ├── Enunciado.txt
 ├── README.md
+├── Compilaciones.sh
+├── Doxyfile
+├── LICENSE
+├── Enunciado.pdf
 └── Makefile
 ```
 
@@ -54,6 +63,7 @@ fin proceso
 proceso programa2 9
 instruccion 4
 instruccion 5
+e/s
 e/s
 fin proceso
 ```
