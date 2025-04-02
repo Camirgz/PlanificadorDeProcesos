@@ -37,4 +37,4 @@ bin/
 
 # Doxygen
 doc/
-*.vscode/
+.vscode/
